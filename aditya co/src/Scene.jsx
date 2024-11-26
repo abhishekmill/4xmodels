@@ -5,6 +5,7 @@ import {
   Environment,
   Float,
   OrbitControls,
+  Sky,
   Stats,
 } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -28,12 +29,14 @@ const Scene = () => {
             <Cloud scale={8} position={[2, 80, 95]} />
             <Cloud scale={18} color={"white"} position={[2, 30, 15]} />
           </group>
-
+          <Sky sunPosition={[5, 2, 0]} />
           <CameraControls />
           <OrbitControls
             zoomSpeed={0.5}
             panSpeed={0.01}
             enablePan={false}
+            maxDistance={170}
+            minDistance={100}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2}
           />
