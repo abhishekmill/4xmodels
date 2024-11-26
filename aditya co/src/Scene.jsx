@@ -9,7 +9,6 @@ import { Canvas, useThree } from "@react-three/fiber";
 import React, { useEffect } from "react";
 import Experience from "./Experience";
 import CameraControls from "./CameraControls";
-import { EffectComposer } from "postprocessing";
 
 const Scene = () => {
   return (
