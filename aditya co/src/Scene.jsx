@@ -1,34 +1,44 @@
 import {
+  Cloud,
+  Clouds,
   Effects,
   Environment,
   Float,
   OrbitControls,
   Stats,
 } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
-import React, { useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import Experience from "./Experience";
 import CameraControls from "./CameraControls";
-
+import gsap from "gsap";
 const Scene = () => {
   return (
     <div id="scene">
       <Canvas>
-        <Environment preset="city" />
-        <Float rotationIntensity={0.2} floatIntensity={0.5} speed={0.3}>
-          <Experience />
-        </Float>
-        <Effects />
-        <CameraControls />
-        <fog attach={"fog"} />
-        <OrbitControls
-          zoomSpeed={1}
-          panSpeed={0.01}
-          enablePan={false}
-          minPolarAngle={Math.PI / 4}
-          maxPolarAngle={Math.PI / 2}
-        />{" "}
-        <Stats />
+        <Suspense>
+          <ambientLight intensity={1} />
+          <Environment preset="city" />
+          <Float rotationIntensity={0.2} floatIntensity={0.5} speed={0.3}>
+            <Experience />
+          </Float>
+          <Effects />
+          <group position={[0, 90, 80]}>
+            <Cloud scale={8} position={[3, 95, 80]} />
+            <Cloud scale={8} position={[2, 80, 95]} />
+            <Cloud scale={18} color={"white"} position={[2, 30, 15]} />
+          </group>
+
+          <CameraControls />
+          <OrbitControls
+            zoomSpeed={0.5}
+            panSpeed={0.01}
+            enablePan={false}
+            minPolarAngle={Math.PI / 4}
+            maxPolarAngle={Math.PI / 2}
+          />
+          <Stats />
+        </Suspense>
       </Canvas>
     </div>
   );
