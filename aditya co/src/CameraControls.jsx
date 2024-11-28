@@ -6,13 +6,6 @@ import { useSelector } from "react-redux";
 const CameraControls = () => {
   const { camera } = useThree();
   const { scene } = useSelector((slice) => slice.scene);
-
-  useEffect(() => {
-    camera.position.z = 0;
-    camera.position.x = 0;
-    camera.position.y = 280;
-  }, []);
-
   function animateCamera(targetPosition, duration = 1) {
     gsap.to(camera.position, {
       x: targetPosition.x,
@@ -27,11 +20,16 @@ const CameraControls = () => {
   }
 
   useEffect(() => {
-    if (scene === "home") {
-      animateCamera({ x: 0, y: 50, z: 155 }, 4);
+    if (scene === "tutorial") {
+      camera.position.y = 120;
+      camera.position.z = 150;
     }
-    if (scene !== "home") {
-      animateCamera({ x: 0, y: 20, z: 155 }, 2);
+
+    if (scene === "home") {
+      animateCamera({ x: 0, y: 40, z: 155 }, 3);
+    }
+    if (scene !== "home" && scene !== "tutorial") {
+      animateCamera({ x: 0, y: 35, z: 145 }, 3);
     }
   }, [scene]);
 

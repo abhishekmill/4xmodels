@@ -14,6 +14,17 @@ import {
 } from "./store/app.Slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useFrame } from "@react-three/fiber";
+import { degToRad } from "three/src/math/MathUtils.js";
+import {
+  Autofocus,
+  BrightnessContrast,
+  EffectComposer,
+  Sepia,
+  ToneMapping,
+} from "@react-three/postprocessing";
+import { useControls } from "leva";
+
+import { editable as e } from "@theatre/r3f";
 
 const Experience = () => {
   const dispatch = useDispatch();
@@ -45,16 +56,16 @@ const Experience = () => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "1") {
-        dispatch(ShowContent());
+        dispatch(ShowInfra());
       }
       if (event.key === "2") {
-        dispatch(ShowSchools());
-      }
-      if (event.key === "3") {
         dispatch(ShowHumanCapicity());
       }
+      if (event.key === "3") {
+        dispatch(ShowContent());
+      }
       if (event.key === "4") {
-        dispatch(ShowInfra());
+        dispatch(ShowSchools());
       }
       if (event.key === "Escape") {
         dispatch(ShowHome());
@@ -73,30 +84,30 @@ const Experience = () => {
     console.log(scene);
 
     if (scene == "schools") {
-      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(53), z: 0 });
+      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(-40), z: 0 });
     }
     if (scene === "content") {
-      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(140), z: 0 });
+      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(53), z: 0 });
     }
     if (scene === "human") {
-      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(-40), z: 0 });
+      animateRotation({ x: 0, y: THREE.MathUtils.degToRad(140), z: 0 });
     }
     if (scene === "infra") {
       animateRotation({ x: 0, y: THREE.MathUtils.degToRad(-130), z: 0 });
     }
-    if (scene === "home") {
+    if (scene === "home" || scene === "tutorial") {
       animateRotation({ x: 0, y: THREE.MathUtils.degToRad(40), z: 0 });
     }
   }, [scene]);
 
   useFrame(() => {
-    if (scene === "home") {
+    if (scene === "home" || scene === "tutorial") {
       meshRef.current.rotation.y += 0.001;
     }
   });
 
   return (
-    <group ref={meshRef}>
+    <e.group ref={meshRef} theatreKey="base model">
       <group
         name="content"
         onClick={() => {
@@ -107,7 +118,6 @@ const Experience = () => {
       </group>
 
       <group
-        name="content"
         onClick={() => {
           dispatch(ShowHumanCapicity());
         }}
@@ -116,7 +126,6 @@ const Experience = () => {
       </group>
 
       <group
-        name="content"
         onClick={() => {
           dispatch(ShowInfra());
         }}
@@ -124,14 +133,13 @@ const Experience = () => {
         <Infrastructure />
       </group>
       <group
-        name="content"
         onClick={() => {
           dispatch(ShowSchools());
         }}
       >
         <Schools />
       </group>
-    </group>
+    </e.group>
   );
 };
 

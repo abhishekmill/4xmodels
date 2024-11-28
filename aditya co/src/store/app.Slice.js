@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const SceneSlice = createSlice({
   name: "scene",
   initialState: {
-    scene: "home",
+    scene: "tutorial",
   },
   reducers: {
     ShowInfra: (state) => {
@@ -22,6 +22,9 @@ export const SceneSlice = createSlice({
     ShowHome: (state) => {
       state.scene = "home";
     },
+    ShowTutorial: (state) => {
+      state.scene = "tutorial";
+    },
   },
 });
 
@@ -31,6 +34,7 @@ export const {
   ShowHumanCapicity,
   ShowHome,
   ShowContent,
+  ShowTutorial,
 } = SceneSlice.actions;
 
 export default SceneSlice.reducer;
